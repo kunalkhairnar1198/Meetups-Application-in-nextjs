@@ -1,29 +1,22 @@
-// import React, { useEffect, useState } from 'react'
+import Head from 'next/head';
 import MeetupList from '../components/meetups/MeetupList'
 import {MongoClient} from 'mongodb'
-
-// const DUMMY_MEETUPS =[
-//     {
-//       id:'m1',
-//       title:'A first meetups',
-//       image:`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3Pq5py6CQ9Dt4IDHzEavjaF5pf9GXfItOCg&s`,
-//       address:'dfsdfdsfdsfdsf',
-//       description:'This is first meetup'
-//     },
-//     {
-//       id:'m2',
-//       title:'A first meetups',
-//       image:`https://bstdating.com/wp-content/uploads/2020/12/Singles-Meetup1-min.jpeg`,
-//       address:'dfsdfdsfdsfdsf',
-//       description:'This is first meetup'
-//     }
-// ]
+import { Fragment } from 'react';
 
 const Homepage = (props) => {
  
   return (
-      <MeetupList meetups={props.meetups}/>
-  )
+      <Fragment>
+        <Head>
+          <title>React Meetups</title>
+          <meta 
+          name='description'
+          content='Browse a huge list of highly active react meetups!'
+          />
+        </Head>
+        <MeetupList meetups={props.meetups}/>
+      </Fragment>
+      )
 }
 // export async function getServerSideProps(context){
 //   const  req = context.req
@@ -38,7 +31,7 @@ const Homepage = (props) => {
 // }
 export async function getStaticProps(){
 
-  const client = await  MongoClient.connect('mongodb+srv://kunalk:vyThUNKDihXTkVwi@cluster0.4vczsp6.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
+  const client = await  MongoClient.connect('mongodb+srv://kunalk200:aRKDhhPdiQFpJdkU@cluster0.4vczsp6.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
   console.log(client)
   const db =client.db()
 

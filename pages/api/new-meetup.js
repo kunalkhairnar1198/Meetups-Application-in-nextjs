@@ -14,7 +14,7 @@ async function hanlder(req, res){
         // const {title, image, address, description } = data
         // console.log(title,image,address,description)
         
-    const client = await  MongoClient.connect('mongodb+srv://kunalk:vyThUNKDihXTkVwi@cluster0.4vczsp6.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
+    const client = await  MongoClient.connect('mongodb+srv://kunalk200:aRKDhhPdiQFpJdkU@cluster0.4vczsp6.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
 
     const db =client.db()
 
