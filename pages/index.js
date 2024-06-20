@@ -38,7 +38,7 @@ const Homepage = (props) => {
 // }
 export async function getStaticProps(){
 
-  const client = await  MongoClient.connect('mongodb+srv://kunalk:ri2dR55Dr7Pdg2eq@cluster0.krpkk6v.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
+  const client = await  MongoClient.connect('mongodb+srv://kunalk:vyThUNKDihXTkVwi@cluster0.4vczsp6.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
   console.log(client)
   const db =client.db()
 

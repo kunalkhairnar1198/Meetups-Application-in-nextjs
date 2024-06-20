@@ -1,60 +1,65 @@
-import React, { Fragment } from 'react'
-import MeetupDetail from '../../components/meetups/MeetupDetail'
+import { MongoClient, ObjectId } from 'mongodb';
+import MeetupDetail from '../../components/meetups/MeetupDetail';
 
-const MeetupDetailsPage = () => {
+
+function MeetupDetails(props) {
   return (
-    <MeetupDetail  
-    title='A first meetups'
-    image='https://bstdating.com/wp-content/uploads/2020/12/Singles-Meetup1-min.jpeg'
-    address='dfsdfdsfdsfdsf'
-    description='This is first meetup'
+    <MeetupDetail
+      image={props.meetupData.image}
+      title={props.meetupData.title}
+      address={props.meetupData.address}
+      description={props.meetupData.description}
     />
-  )
+  );
 }
+
 export async function getStaticPaths() {
+   const client = await  MongoClient.connect('mongodb+srv://kunalk:vyThUNKDihXTkVwi@cluster0.4vczsp6.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
+
+  const db = client.db();
+
+  const meetupsCollection = db.collection('meetups');
+
+  const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
+
+  client.close();
+
   return {
     fallback: false,
-    paths: [
-      {
-        params: {
-          meetupId: 'm1',
-        },
-      },
-      {
-        params: {
-          meetupId: 'm2',
-        },
-      },
-      {
-        params: {
-          meetupId: 'm3',
-        },
-      },
-    ],
+    paths: meetups.map((meetup) => ({
+      params: { meetupId: meetup._id.toString() },
+    })),
   };
 }
 
 export async function getStaticProps(context) {
   // fetch data for a single meetup
 
-  const meetupId = context.params?.meetupId;
-  if (!meetupId) {
-    return {
-      notFound: true, 
-    };
-  }
+  const meetupId = context.params.meetupId;
+  const client = await  MongoClient.connect('mongodb+srv://kunalk:vyThUNKDihXTkVwi@cluster0.4vczsp6.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
 
-  console.log(meetupId);
+  console.log(meetupId)
+  const db = client.db();
+
+  const meetupsCollection = db.collection('meetups');
+
+  const selectedMeetup = await meetupsCollection.findOne({
+    _id: new ObjectId(meetupId),
+  });
+
+  client.close();
 
   return {
     props: {
       meetupData: {
-        title:'A first meetups',
-        image:'https://bstdating.com/wp-content/uploads/2020/12/Singles-Meetup1-min.jpeg',
-        address:'dfsdfdsfdsfdsf',
-        description:'This is first meetup'
+        id: selectedMeetup._id.toString(),
+        title: selectedMeetup.title,
+        address: selectedMeetup.address,
+        image: selectedMeetup.image,
+        description: selectedMeetup.description,
       },
     },
   };
 }
-export default MeetupDetailsPage
+
+export default MeetupDetails;
