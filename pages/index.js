@@ -18,17 +18,7 @@ const Homepage = (props) => {
       </Fragment>
       )
 }
-// export async function getServerSideProps(context){
-//   const  req = context.req
-//   const res = context.res
-//   // fetch api form an api
-  
-//   return {
-//     props :{ 
-//     meetups :  DUMMY_MEETUPS
-//     },
-//   }
-// }
+
 export async function getStaticProps(){
 
   const client = await  MongoClient.connect('mongodb+srv://kunalk200:aRKDhhPdiQFpJdkU@cluster0.4vczsp6.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
